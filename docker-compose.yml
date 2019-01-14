@@ -2,7 +2,7 @@ version: "3"
 
 services:
   mongo:
-    image: circleci/mongo:4-xenial
+    image: mongo:4.0.5-xenial
     restart: always
     environment:
       MONGO_INIT_ROOT_USERNAME: powertrip
