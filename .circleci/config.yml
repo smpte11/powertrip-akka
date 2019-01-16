@@ -9,7 +9,7 @@ jobs:
       - image: circleci/openjdk:10-jdk
     working_directory: ~/repo
     environment:
-      JVM_OPTS: -Xmx3200m -Dconfig.file=./src/test/resources/application.test.conf
+      JVM_OPTS: -Xmx3200m
       TERM: dumb
     steps:
       - checkout
@@ -22,3 +22,15 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies--{{ checksum "build.sbt" }}
+  tests:
+    docker:
+      - image: circleci/openjdk:10-jdk
+        environment:
+          JVM_OPTS: -Xmx3200m -Dconfig.file=./src/test/resources/application.test.conf
+          TERM: dumb
+      - image: circleci/mongo:4.0.5-xenial-ram
+        environment:
+          MONGO_URL: mongodb://localhost:27018/test_powertrip_db
+    steps:
+      - checkout
+      - run: sbt test

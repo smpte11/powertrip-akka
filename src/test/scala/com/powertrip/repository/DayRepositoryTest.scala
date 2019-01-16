@@ -4,29 +4,22 @@ import java.time.LocalDateTime
 
 import org.mongodb.scala.model.Updates._
 import org.mongodb.scala.model.Filters.{equal => equalFilter}
-
-import de.flapdoodle.embed.mongo.distribution.Version
 import org.scalatest.{AsyncFlatSpec, BeforeAndAfter, BeforeAndAfterEach, Matchers}
-import com.github.simplyscala.{MongoEmbedDatabase, MongodProps}
-
 import com.powertrip.models.Models.Day
+import scala.concurrent.duration._
+
+import scala.concurrent.Await
 
 
 class DayRepositoryTest extends AsyncFlatSpec
   with BeforeAndAfter
   with BeforeAndAfterEach
-  with Matchers
-  with MongoEmbedDatabase {
-  var mongoProps: MongodProps = _
-  var repository: BaseRepository[Day] = _
+  with Matchers {
 
-  before {
-    mongoProps = mongoStart(port = 27018, version = Version.V4_0_2)
-    repository = new DayRepository
-  }
+  var repository: BaseRepository[Day] = new DayRepository
 
   after {
-    mongoStop(mongoProps)
+    Await.ready(repository.collection.drop().toFuture, Duration.Inf)
   }
 
   "Class extending BaseRepository" should "insert case classes properly in mongo" in {

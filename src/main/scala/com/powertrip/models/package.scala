@@ -1,6 +1,7 @@
 package com.powertrip
 
-import java.time.{Instant, LocalDateTime, ZoneId}
+import java.time.{Instant, LocalDateTime, ZoneId, ZoneOffset}
+import java.util.Date
 
 import org.mongodb.scala.model.geojson.Point
 import org.bson.{BsonReader, BsonWriter}
@@ -12,14 +13,11 @@ import org.bson.types.ObjectId
 package object models {
 
   class LocalDateTimeCodec extends Codec[LocalDateTime] {
-    override def decode(reader: BsonReader, decoderContext: DecoderContext): LocalDateTime = LocalDateTime.ofInstant(
-      Instant.ofEpochMilli(reader.readDateTime),
-      ZoneId.systemDefault
-    )
+    override def decode(reader: BsonReader, decoderContext: DecoderContext): LocalDateTime = LocalDateTime
+      .ofInstant(Instant.ofEpochMilli(reader.readDateTime), ZoneOffset.UTC)
 
-    override def encode(writer: BsonWriter, value: LocalDateTime, encoderContext: EncoderContext): Unit = writer.writeDateTime(
-      value.atZone(ZoneId.systemDefault).toInstant.toEpochMilli
-    )
+    override def encode(writer: BsonWriter, value: LocalDateTime, encoderContext: EncoderContext): Unit = writer
+      .writeDateTime(value.atZone(ZoneOffset.UTC).toInstant.toEpochMilli)
 
     override def getEncoderClass: Class[LocalDateTime] = classOf[LocalDateTime]
   }
