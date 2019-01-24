@@ -26,11 +26,19 @@ jobs:
     docker:
       - image: circleci/openjdk:10-jdk
         environment:
-          JVM_OPTS: -Xmx3200m -Dconfig.file=./src/test/resources/application.test.conf
+          JVM_OPTS: -Xmx3200m
           TERM: dumb
-      - image: circleci/mongo:4.0.5-xenial-ram
+      - image: circleci/mongo:4-ram
         environment:
-          MONGO_URL: mongodb://localhost:27018/test_powertrip_db
+          MONGO_INITDB_DATABASE: test_powertrip_db
     steps:
       - checkout
+      - run:
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
       - run: sbt test

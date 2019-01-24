@@ -5,8 +5,6 @@ services:
     image: circleci/mongo:4-xenial-ram
     restart: always
     environment:
-      MONGO_INIT_ROOT_USERNAME: powertrip
-      MONGO_INIT_ROOT_PASSWORD: ${POWERTRIP_DB_PASS}
       MONGO_INITDB_DATABASE: powertrip_db
     ports:
       - "27017:27017"
