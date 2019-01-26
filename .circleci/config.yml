@@ -29,8 +29,6 @@ jobs:
           JVM_OPTS: -Xmx3200m
           TERM: dumb
       - image: circleci/mongo:4-ram
-        environment:
-          MONGO_INITDB_DATABASE: test_powertrip_db
     steps:
       - checkout
       - run:
@@ -41,4 +39,17 @@ jobs:
       - run:
           name: Wait for db
           command: dockerize -wait tcp://localhost:27017 -timeout 1m
+      - restore_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies--{{ checksum "build.sbt" }}
       - run: sbt test
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - build
+      - tests:
+          requires:
+            - build
