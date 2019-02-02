@@ -1,29 +1,31 @@
 package com.powertrip
 
 //#quick-start-server
-import scala.concurrent.Await
-import scala.concurrent.duration.Duration
-
-import akka.actor.{ ActorRef, ActorSystem }
+import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
+import com.powertrip.api.DayApi
+import com.powertrip.repository.DayRepository
+
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+import scala.concurrent.ExecutionContext
 
 //#main-class
-object QuickstartServer extends App with UserRoutes {
+object DayServer extends App {
 
   // set up ActorSystem and other dependencies here
   //#main-class
   //#server-bootstrapping
   implicit val system: ActorSystem = ActorSystem("helloAkkaHttpServer")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
+  implicit val executionContext: ExecutionContext = system.dispatcher
   //#server-bootstrapping
-
-  val userRegistryActor: ActorRef = system.actorOf(UserRegistryActor.props, "userRegistryActor")
 
   //#main-class
   // from the UserRoutes trait
-  lazy val routes: Route = userRoutes
+  lazy val routes: Route = new DayApi(new DayRepository).dayRoutes
   //#main-class
 
   //#http-server

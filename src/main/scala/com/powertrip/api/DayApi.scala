@@ -27,8 +27,6 @@ import scala.util.{Failure, Success}
 
 class DayApi(repository: DayRepository)(implicit executionContext: ExecutionContext, materializer: Materializer) extends ErrorAccumulatingCirceSupport {
 
-  case class Base(test: String)
-
   val dayRoutes: Route = ignoreTrailingSlash {
     pathPrefix("days") {
       pathEnd {
