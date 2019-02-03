@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 import akka.http.scaladsl.model.headers.Location
 import akka.http.scaladsl.marshalling.Marshal
-import akka.http.scaladsl.model.{HttpResponse, ResponseEntity, StatusCodes}
+import akka.http.scaladsl.model.{ HttpResponse, ResponseEntity, StatusCodes }
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.stream.Materializer
@@ -22,8 +22,7 @@ import io.circe._
 import org.mongodb.scala.bson.conversions.Bson
 
 import scala.concurrent.ExecutionContext
-import scala.util.{Failure, Success}
-
+import scala.util.{ Failure, Success }
 
 class DayApi(repository: DayRepository)(implicit executionContext: ExecutionContext, materializer: Materializer) extends ErrorAccumulatingCirceSupport {
 

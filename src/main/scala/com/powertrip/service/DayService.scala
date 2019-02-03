@@ -1,7 +1,7 @@
 package com.powertrip.service
 
 import java.time.temporal.ChronoUnit
-import java.time.{LocalDateTime, ZoneId}
+import java.time.{ LocalDateTime, ZoneId }
 
 import com.powertrip.models.Models.Day
 import com.powertrip.models.Date
@@ -13,11 +13,11 @@ object DayService {
     val amount: Int = ChronoUnit.DAYS.between(startDay, endDate).toInt
     if (amount <= 0) Left(DayCreationError("A trip must have a duration."))
     else Right(List.tabulate(amount) {
-      day => Day(
-        startDay.plusDays(day),
-        LocalDateTime.now(ZoneId.systemDefault),
-        LocalDateTime.now(ZoneId.systemDefault)
-      )
+      day =>
+        Day(
+          startDay.plusDays(day),
+          LocalDateTime.now(ZoneId.systemDefault),
+          LocalDateTime.now(ZoneId.systemDefault))
     })
   }
 }

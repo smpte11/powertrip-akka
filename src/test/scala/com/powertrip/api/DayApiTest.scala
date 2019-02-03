@@ -2,7 +2,7 @@ package com.powertrip.api
 
 import java.time.LocalDateTime
 
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCodes}
+import akka.http.scaladsl.model.{ ContentTypes, HttpEntity, StatusCodes }
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.powertrip.models.Models.Day
@@ -13,13 +13,13 @@ import io.circe.syntax._
 import org.mongodb.scala.bson.ObjectId
 import org.mongodb.scala.bson.collection.immutable.Document
 import org.mongodb.scala.result.DeleteResult
-import org.mongodb.scala.{Observable, SingleObservable}
+import org.mongodb.scala.{ Observable, SingleObservable }
 import org.scalamock.scalatest.MixedMockFactory
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{BeforeAndAfter, Matchers, WordSpec}
+import org.scalatest.{ BeforeAndAfter, Matchers, WordSpec }
 
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
+import scala.concurrent.{ Await, Future }
 
 class DayApiTest extends WordSpec
   with Matchers

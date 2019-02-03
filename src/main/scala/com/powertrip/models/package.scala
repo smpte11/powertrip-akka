@@ -1,12 +1,12 @@
 package com.powertrip
 
-import java.time.{Instant, LocalDateTime, ZoneId, ZoneOffset}
+import java.time.{ Instant, LocalDateTime, ZoneId, ZoneOffset }
 import java.util.Date
 
 import org.mongodb.scala.model.geojson.Point
-import org.bson.{BsonReader, BsonWriter}
-import org.bson.codecs.{Codec, DecoderContext, EncoderContext}
-import io.circe.{Decoder, Encoder}
+import org.bson.{ BsonReader, BsonWriter }
+import org.bson.codecs.{ Codec, DecoderContext, EncoderContext }
+import io.circe.{ Decoder, Encoder }
 import io.circe.generic.extras.Configuration
 import org.bson.types.ObjectId
 
@@ -23,7 +23,7 @@ package object models {
   }
 
   implicit val config: Configuration = Configuration.default.withSnakeCaseMemberNames
-  implicit val encodeOID: Encoder[ObjectId] = Encoder.encodeString.contramap[ObjectId] ( _.toHexString )
+  implicit val encodeOID: Encoder[ObjectId] = Encoder.encodeString.contramap[ObjectId](_.toHexString)
   implicit val decodeOID: Decoder[ObjectId] = Decoder.decodeString.emap(str => Right(new ObjectId(str)))
 
   type Date = LocalDateTime

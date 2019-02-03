@@ -1,8 +1,8 @@
 package com.powertrip.service
 
-import java.time.{LocalDateTime, ZoneId}
+import java.time.{ LocalDateTime, ZoneId }
 
-import org.scalatest.{EitherValues, FlatSpec, Matchers}
+import org.scalatest.{ EitherValues, FlatSpec, Matchers }
 import com.powertrip.models.Date
 import com.powertrip.models.Models.Day
 
@@ -20,11 +20,11 @@ class DayServiceTest extends FlatSpec
 
   it should "return an error class if the trip end date is before the start date" in {
     val tripDuration: Either[DayCreationError, List[Day]] = DayService.createDays(tripEndDate, tripStartDate)
-    tripDuration.left.value shouldBe a [DayCreationError]
+    tripDuration.left.value shouldBe a[DayCreationError]
   }
 
   it should "return an error class if the trip has no duration" in {
     val tripDuration: Either[DayCreationError, List[Day]] = DayService.createDays(tripStartDate, tripStartDate)
-    tripDuration.left.value shouldBe a [DayCreationError]
+    tripDuration.left.value shouldBe a[DayCreationError]
   }
 }

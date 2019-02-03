@@ -3,12 +3,12 @@ package com.powertrip.repository
 import org.bson.conversions.Bson
 import org.mongodb.scala.model._
 import org.mongodb.scala.result.DeleteResult
-import org.mongodb.scala.{BulkWriteResult, FindObservable, MongoCollection, SingleObservable}
+import org.mongodb.scala.{ BulkWriteResult, FindObservable, MongoCollection, SingleObservable }
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.reflect.ClassTag
 
-abstract class BaseRepository[T:ClassTag](collectionName:String, executionContext: ExecutionContext)
+abstract class BaseRepository[T: ClassTag](collectionName: String, executionContext: ExecutionContext)
   extends MongoDB {
   private implicit val ec: ExecutionContext = executionContext
 

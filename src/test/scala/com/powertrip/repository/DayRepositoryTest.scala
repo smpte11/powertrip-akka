@@ -3,13 +3,12 @@ package com.powertrip.repository
 import java.time.LocalDateTime
 
 import org.mongodb.scala.model.Updates._
-import org.mongodb.scala.model.Filters.{equal => equalFilter}
-import org.scalatest.{AsyncFlatSpec, BeforeAndAfter, BeforeAndAfterEach, Matchers}
+import org.mongodb.scala.model.Filters.{ equal => equalFilter }
+import org.scalatest.{ AsyncFlatSpec, BeforeAndAfter, BeforeAndAfterEach, Matchers }
 import com.powertrip.models.Models.Day
 import scala.concurrent.duration._
 
 import scala.concurrent.Await
-
 
 class DayRepositoryTest extends AsyncFlatSpec
   with BeforeAndAfter
@@ -26,7 +25,7 @@ class DayRepositoryTest extends AsyncFlatSpec
     val day: Day = Day(LocalDateTime.now, LocalDateTime.now, LocalDateTime.now)
     for {
       result <- repository.insert(day)
-    } yield result shouldBe a [Day]
+    } yield result shouldBe a[Day]
   }
 
   it should "insert many documents properly in mongo" in {
@@ -45,8 +44,8 @@ class DayRepositoryTest extends AsyncFlatSpec
       insertResult <- repository.insert(day)
       updateResult <- repository.updateOne(equalFilter("_id", insertResult._id), currentTimestamp("updatedAt")).toFuture
     } yield {
-      updateResult shouldBe a [Day]
-      updateResult._id should equal (insertResult._id)
+      updateResult shouldBe a[Day]
+      updateResult._id should equal(insertResult._id)
     }
   }
 

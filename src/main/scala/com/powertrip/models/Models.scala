@@ -3,10 +3,9 @@ package com.powertrip.models
 import java.time.LocalDateTime
 
 import cats.Applicative
-import io.circe.{Decoder, Encoder}
+import io.circe.{ Decoder, Encoder }
 import io.circe.generic.semiauto._
 import org.mongodb.scala.bson.ObjectId
-
 
 object Models {
   trait BaseEntity {
@@ -18,8 +17,7 @@ object Models {
     _id: ObjectId,
     date: Date,
     createdAt: Date,
-    updatedAt: Date
-  ) extends BaseEntity
+    updatedAt: Date) extends BaseEntity
 
   object Day {
     def apply(date: Date, createdAt: Date, updatedAt: Date): Day = new Day(new ObjectId, date, createdAt, updatedAt)
@@ -28,5 +26,4 @@ object Models {
   implicit val encoder: Encoder[Day] = deriveEncoder[Day]
   implicit val decoder: Decoder[Day] = deriveDecoder[Day]
 }
-
 
