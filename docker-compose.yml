@@ -4,7 +4,9 @@ services:
   mongo:
     image: mongo:xenial
     restart: always
+    command: [--auth]
     environment:
+      MONGO_INITDB_DATABASE: powertrip_db
       MONGO_INITDB_ROOT_USERNAME: powertrip
       MONGO_INITDB_ROOT_PASSWORD: ${POWERTRIP_DB_PASS}
       POWERTRIP_DB_PASS:
