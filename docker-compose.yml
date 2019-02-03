@@ -2,12 +2,11 @@ version: "3"
 
 services:
   mongo:
-    image: mongo:4.0.5-xenial
+    image: mongo:xenial
     restart: always
     environment:
-      MONGO_INIT_ROOT_USERNAME: powertrip
-      MONGO_INIT_ROOT_PASSWORD: ${POWERTRIP_DB_PASS}
-      MONGO_INITDB_DATABASE: powertrip_db
+      MONGO_INITDB_ROOT_USERNAME: powertrip
+      MONGO_INITDB_ROOT_PASSWORD: ${POWERTRIP_DB_PASS}
+      POWERTRIP_DB_PASS:
     ports:
       - "27017:27017"
-    command: use powertrip_db

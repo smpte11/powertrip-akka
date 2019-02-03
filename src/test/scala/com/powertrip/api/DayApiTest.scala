@@ -5,10 +5,8 @@ import java.time.LocalDateTime
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCodes}
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import com.github.simplyscala.{MongoEmbedDatabase, MongodProps}
 import com.powertrip.models.Models.Day
 import com.powertrip.repository.DayRepository
-import de.flapdoodle.embed.mongo.distribution.Version
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 import io.circe.Json
 import io.circe.syntax._
@@ -28,20 +26,10 @@ class DayApiTest extends WordSpec
   with ScalaFutures
   with ScalatestRouteTest
   with MixedMockFactory
-  with BeforeAndAfter
-  with MongoEmbedDatabase {
+  with BeforeAndAfter {
   val repositoryMock: DayRepository = stub[DayRepository]
   val dayApi = new DayApi(repositoryMock)
   val routes: Route = Route.seal(dayApi.dayRoutes)
-  var mongoProps: MongodProps = _
-
-  before {
-    mongoProps = mongoStart(port = 27018, version = Version.V4_0_2)
-  }
-
-  after {
-    mongoStop(mongoProps)
-  }
 
   "DayApi" should {
     "return a marshalled day when navigating to GET /days/{objectId}" in {
