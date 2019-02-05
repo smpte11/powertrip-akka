@@ -17,7 +17,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "build.sbt" }}
             - v1-dependencies-
-      - run: cat /dev/null | sbt test:compile
+      - run: cat /dev/null | sbt compile
       - save_cache:
           paths:
             - ~/.m2
@@ -28,7 +28,7 @@ jobs:
         environment:
           JVM_OPTS: -Xmx3200m
           TERM: dumb
-      - image: circleci/mongo:4-ram
+      - image: mongo:xenial
     steps:
       - checkout
       - run:
@@ -43,7 +43,7 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies--{{ checksum "build.sbt" }}
-      - run: sbt test
+      - run: sbt -J-Dconfig.file="src/test/resources/application.ci.conf" test
 
 workflows:
   version: 2

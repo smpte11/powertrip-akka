@@ -47,7 +47,3 @@ lazy val root = (project in file(".")).
 resolvers += Resolver.sonatypeRepo("releases")
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 
-// When running tests, we use this configuration
-javaOptions in Test += s"-Dconfig.file=src/test/resources/application.test.conf"
-// We need to fork a JVM process when testing so the Java options above are applied
-fork in Test := true
