@@ -1,3 +1,5 @@
+import com.typesafe.sbt.packager.docker._
+
 lazy val akkaHttpVersion = "10.0.11"
 lazy val akkaVersion    = "2.5.11"
 
@@ -46,9 +48,10 @@ lazy val root = (project in file("."))
       "io.circe"               %% "circe-literal"               % "0.11.0"        % Test
     ),
     mainClass in Compile := Some("com.powertrip.DayServer"),
-    dockerBaseImage := "openjdk:jre",
+    dockerBaseImage := "openjdk:jre-slim-stretch",
     packageName in Docker := "powertrip-day-service",
-    dockerEnvVars := Map("MONGO_PROD" -> sys.env("MONGO_PROD"))
+    version in Docker := "1.0.0",
+    dockerUsername := Some("smpte11")
   )
 
 
