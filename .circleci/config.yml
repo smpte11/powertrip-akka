@@ -43,7 +43,7 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies--{{ checksum "build.sbt" }}
-      - run: sbt -J-Dconfig.file="src/test/resources/application.ci.conf" test
+      - run: sbt -J-Dconfig.file="src/test/resources/application.test.conf" test
 
 workflows:
   version: 2
