@@ -16,7 +16,7 @@ package object repository {
       CodecRegistries.fromCodecs(new LocalDateTimeCodec),
       DEFAULT_CODEC_REGISTRY)
     lazy val config: Config = ConfigFactory.load
-    lazy val client = MongoClient(config.getString("mongo.uri"))
+    lazy val client: MongoClient = MongoClient(sys.env("MONGO_URI"))
     lazy val db: MongoDatabase = client.getDatabase(config.getString("mongo.database")).withCodecRegistry(codecRegistry)
   }
 }
