@@ -10,13 +10,16 @@ import org.bson.codecs.configuration.CodecRegistries.{ fromProviders, fromRegist
 import org.bson.codecs.configuration.{ CodecRegistries, CodecRegistry }
 
 package object repository {
+  import com.powertrip.ConfigEnrichment._
+
   trait MongoDB {
     lazy val codecRegistry: CodecRegistry = fromRegistries(
       fromProviders(classOf[Day]),
       CodecRegistries.fromCodecs(new LocalDateTimeCodec),
       DEFAULT_CODEC_REGISTRY)
     lazy val config: Config = ConfigFactory.load
-    lazy val client: MongoClient = MongoClient(sys.env("MONGO_URI"))
+    lazy val uri: String = config.getStringOrElse("mongo.uri") getOrElse sys.env("MONGO_URI")
+    lazy val client: MongoClient = MongoClient(uri)
     lazy val db: MongoDatabase = client.getDatabase(config.getString("mongo.database")).withCodecRegistry(codecRegistry)
   }
 }
